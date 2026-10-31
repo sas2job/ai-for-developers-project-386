@@ -1,9 +1,7 @@
 module Api
   class BookingsController < ApplicationController
     def upcoming
-      bookings = Booking.includes(:event_type)
-        .where("starts_at >= ?", Time.current)
-        .order(:starts_at)
+      bookings = Booking.upcoming
 
       render json: bookings.map { |booking| serialize_summary(booking) }
     end
