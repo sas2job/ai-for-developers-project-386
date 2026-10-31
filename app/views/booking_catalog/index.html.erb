@@ -1,24 +1,59 @@
 <main class="page page--centered">
   <section class="catalog" aria-labelledby="catalog-title">
-    <p class="eyebrow">Выберите формат</p>
-    <h1 id="catalog-title">Каталог типов встреч</h1>
+    <% if @selected_event_type %>
+      <%= link_to "← Все типы встреч", book_path, class: "catalog__back-link" %>
+      <p class="eyebrow">Выбранный формат</p>
+      <h1 id="catalog-title"><%= @selected_event_type.name %></h1>
+      <p class="catalog__description"><%= @selected_event_type.description %></p>
+      <p class="event-type-card__duration"><%= @selected_event_type.duration_minutes %> мин.</p>
 
-    <% if @event_types.any? %>
-      <div class="event-type-grid">
-        <% @event_types.each do |event_type| %>
-          <article class="event-type-card">
-            <h2><%= event_type.name %></h2>
-            <p><%= event_type.description %></p>
-            <p class="event-type-card__duration"><%= event_type.duration_minutes %> мин.</p>
-          </article>
+      <h2 class="catalog__section-title">Выберите дату</h2>
+      <nav class="calendar-days" aria-label="Даты в ближайшие 14 дней">
+        <% @dates.each do |date| %>
+          <%= link_to book_path(event_type_id: @selected_event_type.id, date: date.iso8601),
+            class: [ "calendar-days__link", ("calendar-days__link--selected" if date == @selected_date) ].compact.join(" "),
+            aria: { current: date == @selected_date ? "date" : nil } do %>
+            <time datetime="<%= date.iso8601 %>"><%= date.strftime("%d.%m") %></time>
+          <% end %>
         <% end %>
-      </div>
+      </nav>
+
+      <h2 class="catalog__section-title">Свободное время</h2>
+      <% if @slots.any? %>
+        <ul class="available-slots">
+          <% @slots.each do |slot| %>
+            <li>
+              <time datetime="<%= slot.starts_at.utc.iso8601 %>"><%= slot.starts_at.strftime("%H:%M") %></time>
+              <span>–</span>
+              <time datetime="<%= slot.ends_at.utc.iso8601 %>"><%= slot.ends_at.strftime("%H:%M") %></time>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="empty-state__text">На эту дату нет свободных слотов. Выберите другой день.</p>
+      <% end %>
     <% else %>
-      <div class="empty-state">
-        <h2>Пока нет типов встреч</h2>
-        <p>Владелец календаря скоро добавит варианты для записи.</p>
-        <%= link_to "На главную", root_path, class: "button button--secondary" %>
-      </div>
+      <p class="eyebrow">Выберите формат</p>
+      <h1 id="catalog-title">Каталог типов встреч</h1>
+
+      <% if @event_types.any? %>
+        <div class="event-type-grid">
+          <% @event_types.each do |event_type| %>
+            <article class="event-type-card">
+              <h2><%= event_type.name %></h2>
+              <p><%= event_type.description %></p>
+              <p class="event-type-card__duration"><%= event_type.duration_minutes %> мин.</p>
+              <%= link_to "Выбрать время", book_path(event_type_id: event_type.id), class: "button button--secondary" %>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty-state">
+          <h2>Пока нет типов встреч</h2>
+          <p>Владелец календаря скоро добавит варианты для записи.</p>
+          <%= link_to "На главную", root_path, class: "button button--secondary" %>
+        </div>
+      <% end %>
     <% end %>
   </section>
 </main>

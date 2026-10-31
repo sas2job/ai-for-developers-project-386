@@ -7,6 +7,7 @@ post "admin/event-types", to: "admin#create_event_type", as: :admin_event_types
 namespace :api do
   resources :event_types, path: "event-types", only: %i[index create]
   resources :bookings, only: :create
+  get "event-types/:event_type_id/slots", to: "event_type_slots#index", as: :event_type_slots
 end
 
   get "api/health", to: "api/health#show"

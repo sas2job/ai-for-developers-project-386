@@ -369,3 +369,64 @@ h1 {
 .admin-event-type-list span {
   color: #5e7192;
 }
+
+.catalog__back-link {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: #5b6e8e;
+}
+
+.catalog__description {
+  max-width: 680px;
+  color: #5e7192;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.catalog__section-title {
+  margin: 36px 0 16px;
+  font-size: 20px;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
+  gap: 8px;
+}
+
+.calendar-days__link {
+  display: grid;
+  min-height: 44px;
+  place-items: center;
+  border: 1px solid #d3deec;
+  border-radius: 8px;
+  background: #fff;
+  color: #13203a;
+  text-decoration: none;
+}
+
+.calendar-days__link:hover,
+.calendar-days__link--selected {
+  border-color: #c45100;
+  background: #fff1e8;
+}
+
+.available-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.available-slots li {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #d3deec;
+  border-radius: 8px;
+  background: #fff;
+  font-variant-numeric: tabular-nums;
+}

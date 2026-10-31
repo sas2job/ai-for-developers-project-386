@@ -20,6 +20,18 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href='/']", text: "На главную"
   end
 
+  test "guest can select an event type and browse dates and available starts" do
+    event_type = EventType.create!(name: "Консультация", description: "Обсудить вопрос", duration_minutes: 30)
+    date = Availability::Slots.window_dates.find { |candidate| !candidate.saturday? && !candidate.sunday? }
+
+    get book_path(event_type_id: event_type.id, date: date.iso8601)
+
+    assert_response :success
+    assert_select "h1", "Консультация"
+    assert_select ".calendar-days__link", count: 14
+    assert_select ".available-slots li", minimum: 1
+  end
+
   test "health endpoint responds successfully" do
     get "/api/health"
 

@@ -6,6 +6,7 @@ module Api
 
       starts_at = parse_starts_at
       return render_invalid_start unless starts_at
+      return render_invalid_start unless Availability::Slots.valid_start?(event_type: event_type, starts_at: starts_at)
 
       booking = event_type.bookings.build(
         starts_at: starts_at,
