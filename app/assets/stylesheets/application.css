@@ -482,3 +482,25 @@ h1 {
 .booking-confirmation h2 {
   margin-top: 0;
 }
+
+.admin-booking-list {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-booking-list li {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) auto minmax(160px, 1fr) minmax(120px, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #e5ebf3;
+}
+
+@media (max-width: 640px) {
+  .admin-booking-list li {
+    grid-template-columns: 1fr auto;
+  }
+}

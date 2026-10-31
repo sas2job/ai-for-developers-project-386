@@ -1,5 +1,13 @@
 module Api
   class BookingsController < ApplicationController
+    def upcoming
+      bookings = Booking.includes(:event_type)
+        .where("starts_at >= ?", Time.current)
+        .order(:starts_at)
+
+      render json: bookings.map { |booking| serialize_summary(booking) }
+    end
+
     def create
       event_type = EventType.find_by(id: event_type_id)
       return render_error("not_found", "Тип встречи не найден.", :not_found) unless event_type
@@ -52,6 +60,17 @@ module Api
         endsAt: booking.ends_at.utc.iso8601,
         guestName: booking.guest_name,
         guestEmail: booking.guest_email
+      }
+    end
+
+    def serialize_summary(booking)
+      {
+        id: booking.id.to_s,
+        eventTypeId: booking.event_type_id.to_s,
+        eventTypeName: booking.event_type.name,
+        startsAt: booking.starts_at.utc.iso8601,
+        endsAt: booking.ends_at.utc.iso8601,
+        guestName: booking.guest_name
       }
     end
 

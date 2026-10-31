@@ -87,6 +87,37 @@ class Api::BookingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "validation_error", response.parsed_body.dig("error", "code")
   end
 
+  test "lists upcoming bookings in order without exposing guest email or description" do
+    later_type = EventType.create!(name: "Planning", description: "Private description", duration_minutes: 30)
+    later = Time.current.beginning_of_day + 2.days + 9.hours
+    sooner = Time.current.beginning_of_day + 1.day + 9.hours
+    @event_type.bookings.create!(
+      starts_at: later,
+      ends_at: later + 30.minutes,
+      guest_name: "Later guest",
+      guest_email: "later-private@example.com"
+    )
+    later_type.bookings.create!(
+      starts_at: sooner,
+      ends_at: sooner + 30.minutes,
+      guest_name: "Sooner guest",
+      guest_email: "sooner-private@example.com"
+    )
+    @event_type.bookings.create!(
+      starts_at: Time.current - 2.days,
+      ends_at: Time.current - 2.days + 30.minutes,
+      guest_name: "Past guest",
+      guest_email: "past-private@example.com"
+    )
+
+    get api_upcoming_bookings_path, as: :json
+
+    assert_response :success
+    assert_equal [ "Sooner guest", "Later guest" ], response.parsed_body.map { |booking| booking.fetch("guestName") }
+    assert response.parsed_body.all? { |booking| booking.fetch("startsAt").end_with?("Z") }
+    assert response.parsed_body.none? { |booking| booking.key?("guestEmail") || booking.key?("description") }
+  end
+
   private
 
   def available_start

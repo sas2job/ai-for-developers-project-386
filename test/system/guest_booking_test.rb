@@ -66,6 +66,31 @@ class GuestBookingTest < ApplicationSystemTestCase
     assert_equal 0, Booking.count
   end
 
+  test "owner sees upcoming bookings in order without guest emails" do
+    later_type = EventType.create!(name: "Планирование", description: "Не показывать описание", duration_minutes: 30)
+    later = Time.current.beginning_of_day + 2.days + 9.hours
+    sooner = Time.current.beginning_of_day + 1.day + 9.hours
+    @event_type.bookings.create!(
+      starts_at: later,
+      ends_at: later + 30.minutes,
+      guest_name: "Позже",
+      guest_email: "later-private@example.com"
+    )
+    later_type.bookings.create!(
+      starts_at: sooner,
+      ends_at: sooner + 30.minutes,
+      guest_name: "Раньше",
+      guest_email: "sooner-private@example.com"
+    )
+
+    visit admin_path
+
+    assert_text "Предстоящие встречи"
+    assert_operator page.text.index("Раньше"), :<, page.text.index("Позже")
+    assert_no_text "private@example.com"
+    assert_no_text "Не показывать описание"
+  end
+
   private
 
   def available_date

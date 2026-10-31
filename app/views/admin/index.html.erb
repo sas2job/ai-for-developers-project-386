@@ -53,5 +53,25 @@
         <p class="empty-state__text">Вы ещё не создали ни одного типа встречи.</p>
       <% end %>
     </section>
+
+    <section class="admin-section" aria-labelledby="upcoming-bookings-title">
+      <h2 id="upcoming-bookings-title">Предстоящие встречи</h2>
+      <% if @upcoming_bookings.any? %>
+        <ul class="admin-booking-list">
+          <% @upcoming_bookings.each do |booking| %>
+            <% starts_at = booking.starts_at.in_time_zone(Availability::Slots::TIME_ZONE) %>
+            <% ends_at = booking.ends_at.in_time_zone(Availability::Slots::TIME_ZONE) %>
+            <li>
+              <time datetime="<%= booking.starts_at.utc.iso8601 %>"><%= starts_at.strftime("%d.%m.%Y %H:%M") %></time>
+              <span>– <%= ends_at.strftime("%H:%M") %></span>
+              <strong><%= booking.event_type.name %></strong>
+              <span><%= booking.guest_name %></span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="empty-state__text">Предстоящих встреч пока нет.</p>
+      <% end %>
+    </section>
   </section>
 </main>

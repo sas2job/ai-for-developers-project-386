@@ -2,6 +2,7 @@ class AdminController < ApplicationController
   def index
     @event_type = EventType.new
     @event_types = EventType.order(:id)
+    load_upcoming_bookings
   end
 
   def create_event_type
@@ -11,11 +12,18 @@ class AdminController < ApplicationController
       redirect_to admin_path, notice: "Тип встречи создан."
     else
       @event_types = EventType.order(:id)
+      load_upcoming_bookings
       render :index, status: :unprocessable_entity
     end
   end
 
   private
+
+  def load_upcoming_bookings
+    @upcoming_bookings = Booking.includes(:event_type)
+      .where("starts_at >= ?", Time.current)
+      .order(:starts_at)
+  end
 
   def admin_event_type_params
     params.require(:event_type).permit(:name, :description, :duration_minutes)
