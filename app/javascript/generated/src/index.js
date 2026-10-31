@@ -12,7 +12,16 @@
  */
 
 import ApiClient from "./ApiClient";
+import ApiError from "./model/ApiError";
+import BookingSummary from "./model/BookingSummary";
+import CreateBookingRequest from "./model/CreateBookingRequest";
+import CreateEventTypeRequest from "./model/CreateEventTypeRequest";
+import CreatedBooking from "./model/CreatedBooking";
+import ErrorEnvelope from "./model/ErrorEnvelope";
+import EventType from "./model/EventType";
+import FieldError from "./model/FieldError";
 import GetHealth200Response from "./model/GetHealth200Response";
+import Slot from "./model/Slot";
 import DefaultApi from "./api/DefaultApi";
 
 /**
@@ -54,10 +63,64 @@ export {
   ApiClient,
 
   /**
+   * The ApiError model constructor.
+   * @property {module:model/ApiError}
+   */
+  ApiError,
+
+  /**
+   * The BookingSummary model constructor.
+   * @property {module:model/BookingSummary}
+   */
+  BookingSummary,
+
+  /**
+   * The CreateBookingRequest model constructor.
+   * @property {module:model/CreateBookingRequest}
+   */
+  CreateBookingRequest,
+
+  /**
+   * The CreateEventTypeRequest model constructor.
+   * @property {module:model/CreateEventTypeRequest}
+   */
+  CreateEventTypeRequest,
+
+  /**
+   * The CreatedBooking model constructor.
+   * @property {module:model/CreatedBooking}
+   */
+  CreatedBooking,
+
+  /**
+   * The ErrorEnvelope model constructor.
+   * @property {module:model/ErrorEnvelope}
+   */
+  ErrorEnvelope,
+
+  /**
+   * The EventType model constructor.
+   * @property {module:model/EventType}
+   */
+  EventType,
+
+  /**
+   * The FieldError model constructor.
+   * @property {module:model/FieldError}
+   */
+  FieldError,
+
+  /**
    * The GetHealth200Response model constructor.
    * @property {module:model/GetHealth200Response}
    */
   GetHealth200Response,
+
+  /**
+   * The Slot model constructor.
+   * @property {module:model/Slot}
+   */
+  Slot,
 
   /**
    * The DefaultApi service constructor.

@@ -9,6 +9,9 @@
       <span>Календарь звонков</span>
     <% end %>
 
-    <%= link_to "Записаться", book_path, class: "site-header__link" unless current_page?(book_path) %>
+<div class="site-header__links">
+  <%= link_to "Записаться", book_path, class: "site-header__link" unless current_page?(book_path) %>
+  <%= link_to "Управление календарём", admin_path, class: "site-header__link" unless current_page?(admin_path) %>
+</div>
   </nav>
 </header>

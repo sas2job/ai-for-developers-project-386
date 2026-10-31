@@ -21,14 +21,14 @@
 
 ## Стек
 
-- Ruby on Rails 8.1, Hotwire (Turbo и Stimulus), SQLite
+- Ruby on Rails 8.1, Hotwire (Turbo и Stimulus), PostgreSQL
 - JavaScript и esbuild для интерфейса
 - TypeSpec → OpenAPI → JavaScript SDK для API
 - Minitest, RuboCop, Oxlint и oxfmt для проверок
 
 ## Установка
 
-Нужны Ruby 4.0.2 и Node.js 24.19.0. Версии зафиксированы в `.ruby-version` и `.node-version`.
+Нужны PostgreSQL 18, Ruby 4.0.2 и Node.js 24.19.0. Версии Ruby и Node.js зафиксированы в `.ruby-version` и `.node-version`. Для локальной базы нужна роль PostgreSQL с правом создавать базы; подключение настраивается переменными `DB_HOST`, `DB_PORT`, `DB_USER` и `DB_PASSWORD`.
 
 ```bash
 git clone https://github.com/sas2job/ai-for-developers-project-386.git
@@ -46,16 +46,15 @@ bin/dev       # сервер на http://localhost:3000 и сборка JavaScri
 bin/check     # RuboCop, Oxlint, oxfmt, TypeSpec, сборка JavaScript и дымовой тест
 ```
 
-После изменения `api/main.tsp` запустите `npm run api:generate` и сохраните обновлённые OpenAPI и SDK. Сейчас API содержит только проверку состояния; функции бронирования появятся на следующих шагах.
+После изменения `api/main.tsp` запустите `npm run api:generate` и сохраните обновлённые OpenAPI и SDK. API поддерживает проверку состояния, типы встреч, поиск слотов, создание записи и список предстоящих встреч. Гость записывается через `/book`, владелец управляет типами и видит встречи на `/admin`.
 
 Docker-образ можно собрать и запустить так:
 
 ```bash
-docker build -t call-calendar .
-docker run --rm -p 3000:80 -e SECRET_KEY_BASE="$(bin/rails secret)" call-calendar
+SECRET_KEY_BASE="$(bin/rails secret)" docker compose up --build
 ```
 
-Данные разработки хранятся в локальной SQLite-базе. Без подключённого тома данные контейнера исчезнут после его удаления.
+Контейнер приложения подключается к PostgreSQL из `compose.yaml`. Данные базы хранятся в Docker volume `postgres_data`; удалите его командой `docker compose down --volumes`.
 
 ---
 
