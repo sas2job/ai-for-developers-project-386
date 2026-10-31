@@ -9,39 +9,231 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  color: #15213a;
-  background: #f5f7fb;
+  color: #13203a;
+  background: #f6f8fc;
   font-family: system-ui, sans-serif;
 }
 
-.home {
+a:focus-visible {
+  outline: 3px solid #f76b1c;
+  outline-offset: 4px;
+}
+
+.site-header {
+  background: #f9fbff;
+  border-bottom: 1px solid #d7e0ed;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #13203a;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand__icon {
+  width: 22px;
+  height: 22px;
+  color: #f76b1c;
+}
+
+.site-header__link {
+  color: #5b6e8e;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.site-header__link:hover {
+  color: #13203a;
+}
+
+.page {
+  min-height: calc(100vh - 61px);
+  padding: 56px 24px;
+  background:
+    radial-gradient(ellipse at 8% 10%, #cfe0ff 0, transparent 55%),
+    radial-gradient(ellipse at 92% 3%, #ffe9d8 0, transparent 46%),
+    #f6f8fc;
+}
+
+.hero {
   display: grid;
-  min-height: 100vh;
-  place-items: center;
-  padding: 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 64px;
+  max-width: 1152px;
+  margin: 0 auto;
 }
 
-.home__content {
-  max-width: 38rem;
-  padding: 3rem;
-  border: 1px solid #d9e1ed;
-  border-radius: 1rem;
+.hero__intro {
+  max-width: 520px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 20px;
+  padding: 6px 12px;
+  border-radius: 999px;
   background: #fff;
+  color: #5e7192;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
-.home__eyebrow {
-  color: #f46720;
+h1 {
+  margin: 0;
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  line-height: 1.15;
+}
+
+.hero__description {
+  max-width: 490px;
+  margin: 24px 0;
+  color: #5e7192;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.button--primary {
+  background: #c45100;
+  color: #fff;
+}
+
+.button--primary::after {
+  content: "→";
+  margin-left: 14px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.button--primary:hover {
+  background: #a74400;
+}
+
+.button--secondary {
+  border: 1px solid #d3deec;
+  background: #fff;
+  color: #13203a;
+}
+
+.button--secondary:hover {
+  border-color: #a9bbd3;
+}
+
+.feature-card,
+.placeholder {
+  border: 1px solid #d5dfed;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgb(21 39 67 / 4%);
+}
+
+.feature-card {
+  min-height: 250px;
+  padding: 24px;
+}
+
+.feature-card__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.feature-card h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.feature-card__badge {
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #fff1e8;
+  color: #bd4c00;
+  font-size: 12px;
   font-weight: 700;
 }
 
-.home h1 {
-  margin-top: 0;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+.feature-card ul {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0 0;
+  padding-left: 18px;
+  color: #5e7192;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-.home__status {
-  margin-top: 2rem;
-  color: #4a6381;
+.page--centered {
+  display: grid;
+  place-items: center;
+}
+
+.placeholder {
+  width: min(100%, 620px);
+  padding: clamp(28px, 6vw, 56px);
+}
+
+.placeholder h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+}
+
+.placeholder .eyebrow {
+  padding: 0;
+  background: transparent;
+}
+
+.placeholder > p:not(.eyebrow) {
+  margin: 20px 0 28px;
+  color: #5e7192;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+@media (max-width: 740px) {
+  .page {
+    padding: 40px 20px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .feature-card {
+    min-height: auto;
+  }
 }

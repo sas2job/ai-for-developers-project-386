@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root "home#index"
+  get "book", to: "booking_catalog#index", as: :book
   get "api/health", to: "api/health#show"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
