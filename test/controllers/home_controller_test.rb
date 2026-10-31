@@ -30,6 +30,11 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", "Консультация"
     assert_select ".calendar-days__link", count: 14
     assert_select ".available-slots li", minimum: 1
+    assert_select "button[data-action='booking#selectSlot']", minimum: 1
+    assert_select "form[data-action='submit->booking#submit'][hidden]"
+    assert_select "input[name='guestName']"
+    assert_select "input[name='guestEmail']"
+    assert_select "section[data-booking-target='confirmation'][hidden]"
   end
 
   test "health endpoint responds successfully" do

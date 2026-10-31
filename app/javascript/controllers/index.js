@@ -4,5 +4,7 @@
 
 import { application } from "./application";
 
+import BookingController from "./booking_controller";
 import HelloController from "./hello_controller";
+application.register("booking", BookingController);
 application.register("hello", HelloController);
