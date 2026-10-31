@@ -35,6 +35,19 @@ class BookingTest < ActiveSupport::TestCase
     assert_instance_of PG::ExclusionViolation, error.cause
   end
 
+  test "database constraint rejects partial overlaps across different event types" do
+    long_event_type = EventType.create!(name: "Long consultation", description: "Long talk", duration_minutes: 60)
+    short_event_type = EventType.create!(name: "Short planning", description: "Short plan", duration_minutes: 30)
+    starts_at = Time.utc(2030, 1, 7, 10)
+    create_booking(long_event_type, starts_at)
+
+    error = assert_raises(ActiveRecord::StatementInvalid) do
+      create_booking(short_event_type, starts_at + 30.minutes)
+    end
+
+    assert_instance_of PG::ExclusionViolation, error.cause
+  end
+
   test "concurrent overlapping inserts cannot both succeed" do
     starts_at = Time.utc(2030, 1, 7, 9)
     barrier = Queue.new
