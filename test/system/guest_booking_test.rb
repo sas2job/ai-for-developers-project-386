@@ -14,6 +14,16 @@ class GuestBookingTest < ApplicationSystemTestCase
     EventType.delete_all
   end
 
+  test "guest sees event types loaded from the public API" do
+    visit book_path
+
+    assert_text "Каталог типов встреч"
+    assert_text "Консультация"
+    assert_text "Обсудить вопрос"
+    assert_text "30 мин."
+    assert_link "Выбрать время", href: book_path(event_type_id: @event_type.id)
+  end
+
   test "guest can create a booking and see a confirmation without email or call link delivery" do
     choose_first_slot
     fill_in "Имя", with: "Анна"

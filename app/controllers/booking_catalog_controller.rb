@@ -1,6 +1,5 @@
 class BookingCatalogController < ApplicationController
   def index
-    @event_types = EventType.order(:id)
     return unless params[:event_type_id].present?
 
     @selected_event_type = EventType.find_by(id: params[:event_type_id])

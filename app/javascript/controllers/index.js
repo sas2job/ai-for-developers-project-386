@@ -5,6 +5,8 @@
 import { application } from "./application";
 
 import BookingController from "./booking_controller";
+import EventTypeCatalogController from "./event_type_catalog_controller";
 import HelloController from "./hello_controller";
 application.register("booking", BookingController);
+application.register("event-type-catalog", EventTypeCatalogController);
 application.register("hello", HelloController);

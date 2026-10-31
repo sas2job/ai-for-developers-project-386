@@ -73,27 +73,17 @@
         </section>
       </div>
     <% else %>
+      <div data-controller="event-type-catalog">
       <p class="eyebrow">Выберите формат</p>
       <h1 id="catalog-title">Каталог типов встреч</h1>
-
-      <% if @event_types.any? %>
-        <div class="event-type-grid">
-          <% @event_types.each do |event_type| %>
-            <article class="event-type-card">
-              <h2><%= event_type.name %></h2>
-              <p><%= event_type.description %></p>
-              <p class="event-type-card__duration"><%= event_type.duration_minutes %> мин.</p>
-              <%= link_to "Выбрать время", book_path(event_type_id: event_type.id), class: "button button--secondary" %>
-            </article>
-          <% end %>
-        </div>
-      <% else %>
-        <div class="empty-state">
-          <h2>Пока нет типов встреч</h2>
-          <p>Владелец календаря скоро добавит варианты для записи.</p>
-          <%= link_to "На главную", root_path, class: "button button--secondary" %>
-        </div>
-      <% end %>
+      <p data-event-type-catalog-target="status" role="status" aria-live="polite">Загружаем типы встреч…</p>
+      <div class="event-type-grid" data-event-type-catalog-target="list"></div>
+      <div class="empty-state" data-event-type-catalog-target="empty" hidden>
+        <h2>Пока нет типов встреч</h2>
+        <p>Владелец календаря скоро добавит варианты для записи.</p>
+        <%= link_to "На главную", root_path, class: "button button--secondary" %>
+      </div>
+      </div>
     <% end %>
   </section>
 </main>
