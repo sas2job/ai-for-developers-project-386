@@ -89,4 +89,5 @@ Rails.application.configure do
   config.hosts << ENV.fetch("APP_HOST", "ai-hexlet.duckdns.org")
   config.hosts << "localhost"
   config.hosts << "127.0.0.1"
+  config.hosts << "calendar.test"
 end
