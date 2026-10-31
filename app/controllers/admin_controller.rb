@@ -20,9 +20,7 @@ class AdminController < ApplicationController
   private
 
   def load_upcoming_bookings
-    @upcoming_bookings = Booking.includes(:event_type)
-      .where("starts_at >= ?", Time.current)
-      .order(:starts_at)
+    @upcoming_bookings = Booking.upcoming
   end
 
   def admin_event_type_params
