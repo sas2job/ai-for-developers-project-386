@@ -21,20 +21,41 @@
 
 ## Стек
 
-- Разное
+- Ruby on Rails 8.1, Hotwire (Turbo и Stimulus), SQLite
+- JavaScript и esbuild для интерфейса
+- TypeSpec → OpenAPI → JavaScript SDK для API
+- Minitest, RuboCop, Oxlint и oxfmt для проверок
 
 ## Установка
 
-<!-- Опишите установку: клонирование, зависимости, переменные окружения -->
+Нужны Ruby 4.0.2 и Node.js 24.19.0. Версии зафиксированы в `.ruby-version` и `.node-version`.
 
 ```bash
 git clone https://github.com/sas2job/ai-for-developers-project-386.git
 cd ai-for-developers-project-386
+bundle install
+npm ci
+bin/rails db:prepare
+git config core.hooksPath .githooks
 ```
 
 ## Использование
 
-<!-- Добавьте примеры запуска и запись asciinema — именно это смотрит работодатель -->
+```bash
+bin/dev       # сервер на http://localhost:3000 и сборка JavaScript с отслеживанием изменений
+bin/check     # RuboCop, Oxlint, oxfmt, TypeSpec, сборка JavaScript и дымовой тест
+```
+
+После изменения `api/main.tsp` запустите `npm run api:generate` и сохраните обновлённые OpenAPI и SDK. Сейчас API содержит только проверку состояния; функции бронирования появятся на следующих шагах.
+
+Docker-образ можно собрать и запустить так:
+
+```bash
+docker build -t call-calendar .
+docker run --rm -p 3000:80 -e SECRET_KEY_BASE="$(bin/rails secret)" call-calendar
+```
+
+Данные разработки хранятся в локальной SQLite-базе. Без подключённого тома данные контейнера исчезнут после его удаления.
 
 ---
 
