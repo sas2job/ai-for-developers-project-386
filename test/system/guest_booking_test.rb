@@ -25,7 +25,13 @@ class GuestBookingTest < ApplicationSystemTestCase
   end
 
   test "guest can create a booking and see a confirmation without email or call link delivery" do
-    choose_first_slot
+    visit book_path
+    assert_text "Каталог типов встреч"
+    click_link "Выбрать время", href: book_path(event_type_id: @event_type.id)
+    click_link @date.strftime("%d.%m"), href: book_path(event_type_id: @event_type.id, date: @date.iso8601)
+    selected_slot = page.first("button[data-booking-target='slot']")
+    selected_start = Time.iso8601(selected_slot["data-starts-at"])
+    selected_slot.click
     fill_in "Имя", with: "Анна"
     fill_in "Email", with: "anna@example.com"
     click_button "Подтвердить запись"
@@ -34,6 +40,13 @@ class GuestBookingTest < ApplicationSystemTestCase
     assert_text "Консультация"
     assert_text "Письмо-приглашение и ссылка на звонок не отправляются."
     assert_equal 1, Booking.count
+
+    visit admin_path
+    assert_text "Предстоящие встречи"
+    assert_text "Консультация"
+    assert_text "Анна"
+    assert_text @date.strftime("%d.%m.%Y")
+    assert_text selected_start.in_time_zone(Availability::Slots::TIME_ZONE).strftime("%H:%M")
   end
 
   test "guest keeps contacts and selects another time after a slot conflict" do
