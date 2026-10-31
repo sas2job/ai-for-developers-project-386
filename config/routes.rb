@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   root "home#index"
   get "book", to: "booking_catalog#index", as: :book
+get "admin", to: "admin#index", as: :admin
+post "admin/event-types", to: "admin#create_event_type", as: :admin_event_types
+
+namespace :api do
+  resources :event_types, path: "event-types", only: %i[index create]
+end
+
   get "api/health", to: "api/health#show"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

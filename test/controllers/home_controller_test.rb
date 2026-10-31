@@ -1,22 +1,22 @@
 require "test_helper"
 
 class HomeControllerTest < ActionDispatch::IntegrationTest
-  test "home page offers booking links" do
+  test "home page links to booking and calendar management" do
     get root_path
 
     assert_response :success
     assert_select "h1", "Запись на звонок"
     assert_select "a[href='/book']", text: "Записаться", count: 2
+    assert_select "a[href='/admin']", text: "Управление календарём"
     assert_select "h2", "Возможности"
-    assert_select "a", text: "Админка", count: 0
   end
 
-  test "booking catalog placeholder explains that booking is unavailable" do
-    get "/book"
+  test "booking catalog shows an empty state when no event types exist" do
+    get book_path
 
     assert_response :success
     assert_select "h1", "Каталог типов встреч"
-    assert_select "p", text: /Запись пока недоступна/
+    assert_select "h2", "Пока нет типов встреч"
     assert_select "a[href='/']", text: "На главную"
   end
 

@@ -1,8 +1,24 @@
 <main class="page page--centered">
-  <section class="placeholder" aria-labelledby="catalog-title">
-    <p class="eyebrow">Скоро</p>
+  <section class="catalog" aria-labelledby="catalog-title">
+    <p class="eyebrow">Выберите формат</p>
     <h1 id="catalog-title">Каталог типов встреч</h1>
-    <p>Запись пока недоступна. Здесь появятся типы встреч и выбор свободного времени.</p>
-    <%= link_to "На главную", root_path, class: "button button--secondary" %>
+
+    <% if @event_types.any? %>
+      <div class="event-type-grid">
+        <% @event_types.each do |event_type| %>
+          <article class="event-type-card">
+            <h2><%= event_type.name %></h2>
+            <p><%= event_type.description %></p>
+            <p class="event-type-card__duration"><%= event_type.duration_minutes %> мин.</p>
+          </article>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="empty-state">
+        <h2>Пока нет типов встреч</h2>
+        <p>Владелец календаря скоро добавит варианты для записи.</p>
+        <%= link_to "На главную", root_path, class: "button button--secondary" %>
+      </div>
+    <% end %>
   </section>
 </main>
