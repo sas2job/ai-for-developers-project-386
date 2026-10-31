@@ -46,6 +46,18 @@ model BookingSummary {
   guestName: string;
 }
 
+model CreatedBooking {
+  id: string;
+  eventTypeId: string;
+  eventTypeName: string;
+  /** RFC 3339 timestamp in UTC, serialized with the Z suffix. */
+  startsAt: utcDateTime;
+  /** RFC 3339 timestamp in UTC, serialized with the Z suffix. */
+  endsAt: utcDateTime;
+  guestName: string;
+  guestEmail: string;
+}
+
 model FieldError {
   field: string;
   message: string;
@@ -68,7 +80,7 @@ model CreatedEventTypeResponse {
 
 model CreatedBookingResponse {
   @statusCode statusCode: 201;
-  @body body: BookingSummary;
+  @body body: CreatedBooking;
 }
 
 model NotFoundResponse {

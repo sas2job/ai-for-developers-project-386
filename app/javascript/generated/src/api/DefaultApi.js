@@ -15,6 +15,7 @@ import ApiClient from "../ApiClient";
 import BookingSummary from "../model/BookingSummary";
 import CreateBookingRequest from "../model/CreateBookingRequest";
 import CreateEventTypeRequest from "../model/CreateEventTypeRequest";
+import CreatedBooking from "../model/CreatedBooking";
 import ErrorEnvelope from "../model/ErrorEnvelope";
 import EventType from "../model/EventType";
 import GetHealth200Response from "../model/GetHealth200Response";
@@ -41,7 +42,7 @@ export default class DefaultApi {
    * Callback function to receive the result of the bookingsCreate operation.
    * @callback module:api/DefaultApi~bookingsCreateCallback
    * @param {String} error Error message, if any.
-   * @param {module:model/BookingSummary} data The data returned by the service call.
+   * @param {module:model/CreatedBooking} data The data returned by the service call.
    * @param {String} response The complete HTTP response.
    */
 
@@ -49,7 +50,7 @@ export default class DefaultApi {
    * Create a booking; the server calculates its end from the event type duration.
    * @param {module:model/CreateBookingRequest} createBookingRequest
    * @param {module:api/DefaultApi~bookingsCreateCallback} callback The callback function, accepting three arguments: error, data, response
-   * data is of type: {@link module:model/BookingSummary}
+   * data is of type: {@link module:model/CreatedBooking}
    */
   bookingsCreate(createBookingRequest, callback) {
     let postBody = createBookingRequest;
@@ -68,7 +69,7 @@ export default class DefaultApi {
     let authNames = [];
     let contentTypes = ["application/json"];
     let accepts = ["application/json"];
-    let returnType = BookingSummary;
+    let returnType = CreatedBooking;
     return this.apiClient.callApi(
       "/api/bookings",
       "POST",

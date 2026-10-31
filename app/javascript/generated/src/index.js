@@ -16,6 +16,7 @@ import ApiError from "./model/ApiError";
 import BookingSummary from "./model/BookingSummary";
 import CreateBookingRequest from "./model/CreateBookingRequest";
 import CreateEventTypeRequest from "./model/CreateEventTypeRequest";
+import CreatedBooking from "./model/CreatedBooking";
 import ErrorEnvelope from "./model/ErrorEnvelope";
 import EventType from "./model/EventType";
 import FieldError from "./model/FieldError";
@@ -84,6 +85,12 @@ export {
    * @property {module:model/CreateEventTypeRequest}
    */
   CreateEventTypeRequest,
+
+  /**
+   * The CreatedBooking model constructor.
+   * @property {module:model/CreatedBooking}
+   */
+  CreatedBooking,
 
   /**
    * The ErrorEnvelope model constructor.

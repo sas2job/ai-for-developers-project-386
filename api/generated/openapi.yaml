@@ -15,7 +15,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BookingSummary'
+                $ref: '#/components/schemas/CreatedBooking'
         '404':
           description: The server cannot find the requested resource.
           content:
@@ -222,6 +222,35 @@ components:
         durationMinutes:
           type: integer
           format: int32
+    CreatedBooking:
+      type: object
+      required:
+        - id
+        - eventTypeId
+        - eventTypeName
+        - startsAt
+        - endsAt
+        - guestName
+        - guestEmail
+      properties:
+        id:
+          type: string
+        eventTypeId:
+          type: string
+        eventTypeName:
+          type: string
+        startsAt:
+          type: string
+          format: date-time
+          description: RFC 3339 timestamp in UTC, serialized with the Z suffix.
+        endsAt:
+          type: string
+          format: date-time
+          description: RFC 3339 timestamp in UTC, serialized with the Z suffix.
+        guestName:
+          type: string
+        guestEmail:
+          type: string
     ErrorEnvelope:
       type: object
       required:
