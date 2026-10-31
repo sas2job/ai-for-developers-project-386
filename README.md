@@ -56,6 +56,14 @@ SECRET_KEY_BASE="$(bin/rails secret)" docker compose up --build
 
 Контейнер приложения подключается к PostgreSQL из `compose.yaml`. Данные базы хранятся в Docker volume `postgres_data`; удалите его командой `docker compose down --volumes`.
 
+## Публикация на VPS
+
+Production Docker-образ запускает Puma на порту из `PORT` (по умолчанию `3000`). Для своего VPS используйте `compose.vps.yaml`: он подключает приложение к внешней Docker-сети `leave-desk_default`, поэтому PostgreSQL и Caddy могут оставаться отдельными сервисами. Файл `.env.vps` содержит параметры подключения и секреты; храните его только на сервере и не добавляйте в Git. Образ можно собрать и запустить командами `docker compose --env-file .env.vps -f compose.vps.yaml up -d --build`.
+
+Публичный адрес: https://ai-hexlet.duckdns.org. Данные встреч хранятся в PostgreSQL на существующем VPS и переживают перезапуск контейнера приложения. Они пропадут при удалении базы или её Docker volume; резервное копирование на VPS нужно настраивать отдельно.
+
+Для этого VPS нет доступного MCP-сервера управления, поэтому деплой выполняется по SSH. Безопасный шаблон подключения и команды деплоя приведены в [инструкции для агента](docs/deployment-vps.md); ключи и `.env.vps` остаются вне репозитория.
+
 ---
 
 <details>

@@ -19,6 +19,7 @@ services:
       database:
         condition: service_healthy
     environment:
+      PORT: ${PORT:-3000}
       DB_HOST: database
       DB_PORT: 5432
       DB_USER: ${DB_USER:-call_calendar}
@@ -26,7 +27,7 @@ services:
       DB_NAME: ${DB_NAME:-call_calendar_production}
       SECRET_KEY_BASE: ${SECRET_KEY_BASE:?Set SECRET_KEY_BASE before starting the app}
     ports:
-      - "3000:80"
+      - "${PORT:-3000}:${PORT:-3000}"
 
 volumes:
   postgres_data:

@@ -1,5 +1,6 @@
 /.bundle/
 /.env*
+!/.env.vps.example
 /node_modules/
 /log/*
 !/log/.keep
