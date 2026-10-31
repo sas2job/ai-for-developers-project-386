@@ -2,10 +2,11 @@
 
 - Запуск: `bundle install`, `npm ci`, `bin/rails db:prepare`, затем `bin/dev`.
 - Все проверки: `bin/check`. Отдельно: `bin/rails test`, `bin/rubocop`, `npm run lint`, `npm run format:check`, `npm run build`.
-- API: контракт в `api/main.tsp`; после его изменения запускайте `npm run api:generate` и сохраняйте `api/generated/openapi.yaml` вместе с `app/javascript/generated/src/`.
+- API: контракт в `api/main.tsp`. `api/generated/openapi.yaml` и `app/javascript/generated/src/` генерируются через `npm run api:generate`; редактируйте контракт и не правьте эти артефакты вручную.
 - Устройство: Rails-контроллеры и представления в `app/`, JavaScript-контроллеры Stimulus в `app/javascript/controllers/`, тесты Minitest в `test/`.
 - Git-хук вызывает `bin/check`; включить его можно командой `git config core.hooksPath .githooks`.
 - Коммиты оформляйте по Conventional Commits: `feat:`, `fix:`, `test:`, `docs:`, `chore:` и другие стандартные типы.
+- Каждый коммит реализации ссылается на свой GitHub Issue, например `feat: запись на свободный слот (#12)`.
 
 ## Agent skills
 
